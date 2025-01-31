@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Hostel Fine Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="dashboard.html">Hostel Fine Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logoutBtn">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h2>Admin Dashboard</h2>
+            </div>
+            <div class="col-md-6 text-end">
+                <h4>Total Amount Collected: ₹<span id="totalAmount">0.00</span></h4>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-success btn-lg me-2" data-bs-toggle="modal" data-bs-target="#collectFineModal">
+                    <i class="fas fa-money-bill-wave"></i> Collect Fine
+                </button>
+                <button type="button" class="btn btn-warning btn-lg" data-bs-toggle="modal" data-bs-target="#withdrawFineModal">
+                    <i class="fas fa-undo"></i> Withdraw Fine
+                </button>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Add New Fine</h4>
+            </div>
+            <div class="card-body">
+                <form id="fineForm">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="studentName" class="form-label">Student Name</label>
+                            <input type="text" class="form-control" id="studentName" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="roomNumber" class="form-label">Room Number</label>
+                            <input type="text" class="form-control" id="roomNumber" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="amount" class="form-label">Amount (₹)</label>
+                            <input type="number" step="0.01" class="form-control" id="amount" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="reason" class="form-label">Reason</label>
+                            <select class="form-select" id="reason" required>
+                                <option value="">Select Reason</option>
+                                <option value="Late entry after 10 PM">Late entry after 10 PM - ₹100</option>
+                                <option value="Room cleanliness violation">Room cleanliness violation - ₹50</option>
+                                <option value="Unauthorized guests">Unauthorized guests - ₹200</option>
+                                <option value="Damaging hostel property">Damaging hostel property - Cost + ₹500</option>
+                                <option value="Missing roll call">Missing roll call - ₹50</option>
+                                <option value="Using electrical appliances">Using electrical appliances - ₹200</option>
+                                <option value="Missing mess without notice">Missing mess without notice - ₹100</option>
+                                <option value="Noise complaints">Noise complaints - ₹150</option>
+                                <option value="Smoking/Alcohol possession">Smoking/Alcohol possession - ₹1000</option>
+                                <option value="Late fee payment">Late fee payment - ₹50/day</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Fine</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Fine Records</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Student Name</th>
+                                <th>Room Number</th>
+                                <th>Amount</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fineRecords">
+                            <!-- Fine records will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collect Fine Modal -->
+    <div class="modal fade" id="collectFineModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Collect Fine</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="collectFineForm">
+                        <div class="mb-3">
+                            <label for="collectStudentName" class="form-label">Student Name</label>
+                            <input type="text" class="form-control" id="collectStudentName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="collectRoomNumber" class="form-label">Room Number</label>
+                            <input type="text" class="form-control" id="collectRoomNumber" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Collect Fine</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Fine Modal -->
+    <div class="modal fade" id="withdrawFineModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">Withdraw Fine</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="withdrawFineForm">
+                        <div class="mb-3">
+                            <label for="withdrawStudentName" class="form-label">Student Name</label>
+                            <input type="text" class="form-control" id="withdrawStudentName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="withdrawRoomNumber" class="form-label">Room Number</label>
+                            <input type="text" class="form-control" id="withdrawRoomNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="withdrawReason" class="form-label">Reason for Withdrawal</label>
+                            <textarea class="form-control" id="withdrawReason" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Withdraw Fine</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white mt-5">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Contact Information</h5>
+                    <p>Hostel Warden: +91 9876543210</p>
+                    <p>Email: warden@hostelfine.com</p>
+                    <p>Office Hours: 9:00 AM - 5:00 PM</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Important Notes</h5>
+                    <ul>
+                        <li>Fines must be paid within 7 days</li>
+                        <li>Appeals must be submitted within 3 days</li>
+                        <li>Keep your fine receipts safe</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <p>&copy; 2025 Hostel Fine Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
