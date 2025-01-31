@@ -1,5 +1,25 @@
-// Get fines from localStorage
+// Get fines and fine usage from localStorage
 const fines = JSON.parse(localStorage.getItem('fines')) || [];
+const fineUsage = JSON.parse(localStorage.getItem('fineUsage')) || [];
+
+// Calculate and display total fines collected, used amount, and remaining amount
+function updateFinancialSummary() {
+    // Calculate total fines collected
+    const totalCollected = fines
+        .filter(fine => fine.status === 'paid')
+        .reduce((sum, fine) => sum + fine.amount, 0);
+    
+    // Calculate total amount used
+    const totalUsed = fineUsage.reduce((sum, usage) => sum + usage.amount, 0);
+    
+    // Calculate remaining amount
+    const remainingAmount = totalCollected - totalUsed;
+    
+    // Update the display
+    document.getElementById('totalCollectedAmount').textContent = totalCollected.toFixed(2);
+    document.getElementById('totalUsedAmount').textContent = totalUsed.toFixed(2);
+    document.getElementById('remainingAmount').textContent = remainingAmount.toFixed(2);
+}
 
 // Calculate and display total fines collected
 function updateTotalFines() {
@@ -73,3 +93,6 @@ document.getElementById('studentSearchForm').addEventListener('submit', function
 
 // Update total fines when page loads
 updateTotalFines();
+
+// Call updateFinancialSummary when the page loads
+document.addEventListener('DOMContentLoaded', updateFinancialSummary);
