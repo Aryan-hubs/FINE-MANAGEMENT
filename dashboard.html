@@ -26,15 +26,36 @@
 
     <div class="container mt-4">
         <div class="row mb-4">
-            <div class="col-md-6">
-                <h2>Admin Dashboard</h2>
+            <div class="col-md-4">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Fines Collected</h5>
+                        <h3>₹<span id="totalCollectedAmount">0</span></h3>
+                        <small>Total amount of all paid fines</small>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 text-end">
-                <h4>Total Amount Collected: ₹<span id="totalAmount">0.00</span></h4>
+            <div class="col-md-4">
+                <div class="card bg-warning text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Used Amount</h5>
+                        <h3>₹<span id="totalUsedAmount">0</span></h3>
+                        <small>Total amount used across all categories</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Remaining Amount</h5>
+                        <h3>₹<span id="totalAmount">0</span></h3>
+                        <small>Amount available for use</small>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="row mb-4">
+        <div class="row">
             <div class="col-md-6">
                 <button type="button" class="btn btn-success btn-lg me-2" data-bs-toggle="modal" data-bs-target="#collectFineModal">
                     <i class="fas fa-money-bill-wave"></i> Collect Fine
@@ -109,6 +130,86 @@
                             <!-- Fine records will be dynamically added here -->
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>Use Fine Amount</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Student Welfare</h5>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="welfareToggle">
+                                    <label class="form-check-label" for="welfareToggle">Use for Student Welfare</label>
+                                </div>
+                                <p class="mt-2">Available amount: ₹<span id="welfareAmount">0</span></p>
+                                <div class="mb-2">
+                                    <label class="form-label">Amount to Use</label>
+                                    <input type="number" class="form-control" id="welfareUseAmount" min="0" step="0.01">
+                                </div>
+                                <button class="btn btn-primary mt-2" onclick="useFineAmount('welfare')">Use Amount</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Hostel Maintenance</h5>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="maintenanceToggle">
+                                    <label class="form-check-label" for="maintenanceToggle">Use for Maintenance</label>
+                                </div>
+                                <p class="mt-2">Available amount: ₹<span id="maintenanceAmount">0</span></p>
+                                <div class="mb-2">
+                                    <label class="form-label">Amount to Use</label>
+                                    <input type="number" class="form-control" id="maintenanceUseAmount" min="0" step="0.01">
+                                </div>
+                                <button class="btn btn-primary mt-2" onclick="useFineAmount('maintenance')">Use Amount</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Emergency Fund</h5>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="emergencyToggle">
+                                    <label class="form-check-label" for="emergencyToggle">Use for Emergency</label>
+                                </div>
+                                <p class="mt-2">Available amount: ₹<span id="emergencyAmount">0</span></p>
+                                <div class="mb-2">
+                                    <label class="form-label">Amount to Use</label>
+                                    <input type="number" class="form-control" id="emergencyUseAmount" min="0" step="0.01">
+                                </div>
+                                <button class="btn btn-primary mt-2" onclick="useFineAmount('emergency')">Use Amount</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Category</th>
+                                        <th>Amount Used</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usageHistory">
+                                    <!-- Usage history will be added here dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
